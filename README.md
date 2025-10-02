@@ -1,4 +1,7 @@
-<img width="801" height="572" alt="image" src="https://github.com/user-attachments/assets/28b2cd03-3df6-4414-813e-1fdd54249566" />
+
+<img width="4464" height="1944" alt="image" src="https://github.com/user-attachments/assets/6ae23408-ba5e-40b8-8f29-8ef5be2a7b3f" />
+
+
 
 
 This github is dedicated to everything that you need to use with IBM software from the Automation and App Modernization portfolio.
