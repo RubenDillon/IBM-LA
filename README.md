@@ -14,7 +14,7 @@ El softwrare producido por IBM se divide en cuatro pilares, basicamente Hybrid C
 
 IBM Automation 
 =
-Este portfolio tiene tres grandes divisiones, Aplicaciones e Integracion, Automatizacion de Infraestructura y Administracion de Tecnologias para el negocio. La siguiente grafica representa algunos de los componentes que hay dentro de cada pilar.
+Este portfolio tiene tres grandes divisiones: Aplicaciones e Integracion, Automatizacion de Infraestructura y Administracion de Tecnologias para el negocio. La siguiente grafica representa algunos de los componentes que hay dentro de cada pilar.
 
 <img width="1123" height="631" alt="image" src="https://github.com/user-attachments/assets/d6e787ee-8d3f-4d76-9c60-85c6ac7de33c" />
 
