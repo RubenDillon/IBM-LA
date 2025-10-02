@@ -2,17 +2,21 @@
 
 This github is dedicated to everything that you need to use with IBM software from the Automation and App Modernization portfolio.
 
+IBM Software
+=
+
+El softwrare producido por IBM se divide en cuatro pilares, basicamente Hybrid Cloud (el software de Red Hat), Transaction Processing (Software que corre en Z - mainframe), Data (software relacionado con IA y datos) y finalmente Automation.
+
+<img width="1123" height="561" alt="image" src="https://github.com/user-attachments/assets/f0ff6dd8-9d68-4643-a203-8e6d54fd469a" />
+
+
 IBM Automation 
 =
-This portfolio is divided in IT and Business Automation. 
+Este portfolio tiene tres grandes divisiones, Aplicaciones e Integracion, Automatizacion de Infraestructura y Administracion de Tecnologias para el negocio. La siguiente grafica representa algunos de los componentes que hay dentro de cada pilar.
 
-<img width="847" alt="image" src="https://github.com/user-attachments/assets/3c574fbb-571b-4dd1-b69c-807cc84c3a6e">
+<img width="1123" height="631" alt="image" src="https://github.com/user-attachments/assets/d6e787ee-8d3f-4d76-9c60-85c6ac7de33c" />
 
 
-App Modernization 
-=
-This Portfolio we have two great pillars, where we dedicate solutions to the Application and the Integration.
 
-<img width="875" alt="image" src="https://github.com/user-attachments/assets/169d04e4-29be-4d3c-a823-00c1c0bf8259">
 
 
