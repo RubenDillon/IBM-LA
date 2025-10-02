@@ -1,4 +1,5 @@
-![image](https://github.com/user-attachments/assets/52d6f872-9794-481b-82d3-9eef74183cd5)
+<img width="801" height="572" alt="image" src="https://github.com/user-attachments/assets/28b2cd03-3df6-4414-813e-1fdd54249566" />
+
 
 This github is dedicated to everything that you need to use with IBM software from the Automation and App Modernization portfolio.
 
