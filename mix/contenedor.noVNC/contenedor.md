@@ -211,6 +211,43 @@ done
 
 ```
 
+Watch_once modificado (prueba, teoria entra en loop ... hay que probarlo)
+
+```
+
+#!/bin/bash
+export DISPLAY=:0
+
+# Video inicial + Playlist con autoplay y loop
+URL="https://www.youtube.com/watch?v=4nEUSpl6Gjo&list=PLjWWcSmVuMblNYuM-cumRmPtt2lOIs0Ty&index=0&autoplay=1&loop=1"
+
+while true; do
+  echo "Iniciando Chromium en modo kiosko..."
+  chromium-browser \
+    --no-sandbox \
+    --disable-gpu \
+    --disable-software-rasterizer \
+    --disable-dev-shm-usage \
+    --disable-background-timer-throttling \
+    --disable-renderer-backgrounding \
+    --disable-features=UseOzonePlatform,MediaSessionService \
+    --autoplay-policy=no-user-gesture-required \
+    --ignore-certificate-errors \
+    --window-size=1920,1080 \
+    --start-fullscreen \
+    --kiosk "$URL"
+
+  echo "Chromium terminó. Reiniciando en 5 segundos..."
+  sleep 5
+done
+
+
+```
+
+
+
+
+
 ## ▶️ Adaptando Watch_once.sh
 
 1) Poniendo una playlist directamente "https://www.youtube.com/playlist?list=PLBrdJqPHEZjuuzjTs7pZ_mnDagZHgqTfG"
