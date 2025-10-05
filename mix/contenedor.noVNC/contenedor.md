@@ -177,134 +177,33 @@ tail -f /dev/null
 
 ```
 
-## ▶️ start.sh modificado con otras opciones
-
-```
-#!/bin/bash
-
-LOG_DIR="/tmp/kiosk-logs"
-mkdir -p "$LOG_DIR"
-echo "📁 Logs guardados en $LOG_DIR"
-
-echo "🚀 Lanzando Xvfb en DISPLAY=:0"
-Xvfb :0 -screen 0 1920x1080x24 > "$LOG_DIR/xvfb.log" 2>&1 &
-XVFB_PID=$!
-echo "🔧 Xvfb PID: $XVFB_PID"
-
-export DISPLAY=:0
-
-# Esperar hasta 10 segundos a que el DISPLAY esté disponible
-for i in {1..10}; do
-  if xdpyinfo -display $DISPLAY > "$LOG_DIR/xdpyinfo.log" 2>&1; then
-    echo "✅ Xvfb activo en DISPLAY=$DISPLAY"
-    break
-  else
-    echo "⏳ Esperando a que el display $DISPLAY esté disponible... ($i)"
-    sleep 1
-  fi
-done
-
-if ! xdpyinfo -display $DISPLAY > /dev/null 2>&1; then
-  echo "❌ ERROR: El display $DISPLAY no está disponible después de 10 segundos."
-  echo "📝 Contenido de $LOG_DIR/xvfb.log:"
-  cat "$LOG_DIR/xvfb.log"
-  exit 1
-fi
-
-echo "📋 xdpyinfo:"
-cat "$LOG_DIR/xdpyinfo.log"
-
-echo "🚀 Iniciando x11vnc"
-./x11vnc.sh > "$LOG_DIR/x11vnc.log" 2>&1 &
-X11VNC_PID=$!
-echo "🔧 x11vnc PID: $X11VNC_PID"
-
-echo "🌐 Lanzando noVNC en puerto 8080"
-nohup /opt/noVNC/utils/novnc_proxy --vnc localhost:5900 --listen 8080 > "$LOG_DIR/novnc.log" 2>&1 &
-NOVNC_PID=$!
-echo "🔧 noVNC PID: $NOVNC_PID"
-
-sleep 3
-
-echo "🎥 Lanzando Chromium vía watch_once.sh"
-./watch_once.sh > "$LOG_DIR/chromium.log" 2>&1 &
-CHROME_PID=$!
-echo "🔧 Chromium PID: $CHROME_PID"
-
-echo "🛠️ Iniciando simulador de subtítulos (tecla 'c' cada 15 min)"
-(
-  while true; do
-    sleep 900  # 15 minutos
-    echo "$(date '+%Y-%m-%d %H:%M:%S') ⏱️ Simulando tecla 'c'" >> "$LOG_DIR/subtitles_simulator.log"
-    xdotool key c >> "$LOG_DIR/subtitles_simulator.log" 2>&1
-  done
-) &
-SIMULATOR_C_PID=$!
-echo "🔧 Simulador de subtítulos PID: $SIMULATOR_C_PID"
-
-echo "🛠️ Iniciando simulador de aleatorio + siguiente (cada 10–25 min)"
-(
-  while true; do
-    RANDOM_MIN=$(shuf -i 10-25 -n 1)
-    echo "$(date '+%Y-%m-%d %H:%M:%S') ⏳ Esperando $RANDOM_MIN minutos antes de 'aleatorio + siguiente'" >> "$LOG_DIR/random_skip_simulator.log"
-    sleep "$((RANDOM_MIN * 60))"
-
-    CHROME_WIN=$(xdotool search --name "YouTube" | head -n 1)
-    if [[ -n "$CHROME_WIN" ]]; then
-      xdotool windowactivate "$CHROME_WIN"
-      sleep 1
-    fi
-
-    echo "$(date '+%Y-%m-%d %H:%M:%S') 🎲 Simulando 'Shift+R' (aleatorio)" >> "$LOG_DIR/random_skip_simulator.log"
-    xdotool key shift+r >> "$LOG_DIR/random_skip_simulator.log" 2>&1
-
-    sleep 1
-
-    echo "$(date '+%Y-%m-%d %H:%M:%S') ⏭️ Simulando 'Shift+N' (siguiente)" >> "$LOG_DIR/random_skip_simulator.log"
-    xdotool key shift+n >> "$LOG_DIR/random_skip_simulator.log" 2>&1
-
-
-    echo "$(date '+%Y-%m-%d %H:%M:%S') 🔁 Click en botón de loop" >> "$LOG_DIR/random_skip_simulator.log"
-    xdotool mousemove 1830 950 click 1 >> "$LOG_DIR/random_skip_simulator.log" 2>&1
-
-  done
-) &
-SKIP_SIMULATOR_PID=$!
-echo "🔧 Simulador aleatorio/siguiente PID: $SKIP_SIMULATOR_PID"
-
-echo ""
-echo "📊 Procesos activos:"
-ps -ef | grep -E "Xvfb|x11vnc|chromium|novnc|xdotool" | grep -v grep
-
-echo ""
-echo "📡 Kiosk corriendo. Accedé desde tu navegador a:"
-echo "   👉 http://<IP-de-la-máquina>:8080/vnc.html"
-echo ""
-echo "📦 Contenedor se mantendrá activo. Logs vivos en $LOG_DIR"
-
-# Mantener contenedor activo
-tail -f /dev/null
-
-```
-
-
 ---
 
 ## ▶️ watch_once.sh
 
 ```bash
 #!/bin/bash
-
 export DISPLAY=:0
 
-URL="https://www.youtube.com/playlist?list=PLBrdJqPHEZjuuzjTs7pZ_mnDagZHgqTfG"
+# URL de la playlist con video inicial
+URL="https://www.youtube.com/watch?v=4nEUSpl6Gjo&list=PLjWWcSmVuMblNYuM-cumRmPtt2lOIs0Ty"
 
 while true; do
   echo "Iniciando Chromium en modo kiosko..."
-  chromium-browser --no-sandbox --disable-gpu --disable-software-rasterizer \
+  chromium-browser \
+    --no-sandbox \
+    --disable-gpu \
+    --disable-software-rasterizer \
+    --disable-dev-shm-usage \
+    --disable-background-timer-throttling \
+    --disable-renderer-backgrounding \
+    --disable-features=UseOzonePlatform,MediaSessionService \
     --autoplay-policy=no-user-gesture-required \
-    --disable-features=MediaSessionService \
-    --window-size=1024,768 --start-fullscreen --kiosk "$URL"
+    --ignore-certificate-errors \
+    --window-size=1920,1080 \
+    --start-fullscreen \
+    --kiosk "$URL"
+
   echo "Chromium terminó. Reiniciando en 5 segundos..."
   sleep 5
 done
