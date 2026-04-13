@@ -24,7 +24,7 @@ Run the following command as the default admin user on the bastion host to store
 
 ```bash
 PUBLIC_KEY=$(cat ~/.ssh/id_rsa.pub)
-ssh root@host1 "sudo -i bash -c 'echo \"$PUBLIC_KEY\" >> ~/.ssh/authorized_keys' && echo \"SSH key added to aiopsc1 successfully\""
+ssh root@host1 "sudo -i bash -c 'echo \"$PUBLIC_KEY\" >> ~/.ssh/authorized_keys' && echo \"SSH key added to host1 successfully\""
 
 ```
 
