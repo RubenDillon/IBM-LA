@@ -63,9 +63,17 @@ chmod 600 ~/.ssh/config && echo \"All operations completed successfully\"'"
 
 ```
 
-2.xxy
+2.Instalar mismos componentes en x hosts
 -
 
+```bash
+export SSH_OPTIONS="-o StrictHostKeyChecking=no"
+for host in host1 host2 host3 host4; do
+    ssh -t $SSH_OPTIONS root@$host 'sudo dnf install -y xxxxxxx'   ! donde xxxxx son los componentes que queremos instalar en esos nodos
+    echo "Installation complete on $host"
+done
+
+```
 
 3.xxy
 -
