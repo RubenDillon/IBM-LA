@@ -1,5 +1,5 @@
 # Trabajando con un bastion
-=
+
 
 En este archivo subo algunas mejores practicas para cuando es necesario trabajar con un bastion para acceder a una red segura
 
