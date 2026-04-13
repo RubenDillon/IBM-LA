@@ -63,7 +63,19 @@ chmod 600 ~/.ssh/config && echo \"All operations completed successfully\"'"
 
 ```
 
+2.xxy
+-
+
+
+3.xxy
+-
+
+
+4.xxy
+-
+
 
 
 Fuente
+=
 - documentacion para desplegar AIOPs desde un bastion (https://ibm.github.io/waiops-tech-jam/labs/cloud-pak-aiops/install-lab-linux/installation/)
