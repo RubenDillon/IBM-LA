@@ -3,7 +3,7 @@
 
 En este archivo subo algunas mejores practicas para cuando es necesario trabajar con un bastion para acceder a una red segura
 
-Permitir acceso root en los nodos
+1. Permitir acceso root en los nodos
 -
 
 ```bash
