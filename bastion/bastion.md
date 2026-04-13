@@ -6,7 +6,7 @@ En este archivo subo algunas mejores practicas para cuando es necesario trabajar
 Permitir acceso root en los nodos
 -
 
-´´´
+'''
 export SSH_OPTIONS="-o StrictHostKeyChecking=no"
 for host in host1 host2 host3 host4; do
     ssh -t $SSH_OPTIONS root@$host 'sudo bash -s' << 'EOF'
@@ -19,4 +19,4 @@ for host in host1 host2 host3 host4; do
         echo "PermitRootLogin set on $(hostname)"
 EOF
 done
-´´´
+'''
